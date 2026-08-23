@@ -13,21 +13,26 @@ const cookieOptions = {
 };
 
 async function register(req,res){
-    const {username,email,password,bio,profileImage} = req.body
-    
-    const isuseralreadyexists = await usermodel.findOne({
-        $or:[{email},{username}]
-    })
-    if(isuseralreadyexists){
-        return res.status(400).json({message:"user already exists" + (isuseralreadyexists.email === email ? "email already exists" : "username already exists")})
-    }
-    const hash = await bcrypt.hash(password,10);
+    try {
+        const {username,email,password,bio,profileImage} = req.body;
 
-    const user = await usermodel.create({username,email,password:hash,bio,profileImage})
+        if (!username || !email || !password) {
+            return res.status(400).json({ message: "Username, email, and password are required" });
+        }
 
-    const token = jwt.sign({id:user._id,email:user.email,username:user.username},process.env.JWT_SECRET,{expiresIn : "1d"})
+        const isuseralreadyexists = await usermodel.findOne({
+            $or:[{email},{username}]
+        });
+        if(isuseralreadyexists){
+            return res.status(400).json({message:"user already exists" + (isuseralreadyexists.email === email ? "email already exists" : "username already exists")});
+        }
+        const hash = await bcrypt.hash(password,10);
 
-    res.cookie("jwt_token", token, cookieOptions)
+        const user = await usermodel.create({username,email,password:hash,bio,profileImage});
+
+        const token = jwt.sign({id:user._id,email:user.email,username:user.username},process.env.JWT_SECRET,{expiresIn : "1d"});
+
+        res.cookie("jwt_token", token, cookieOptions);
 
         return res.status(201).json({
             message:"User created successfully",
@@ -38,7 +43,11 @@ async function register(req,res){
                 profileImage:user.profileImage,
                 followers: user.followers || [],
                 following: user.following || []
-            }})
+            }});
+        } catch (error) {
+            console.error("Registration failed:", error);
+            return res.status(500).json({ message: "Registration failed", error: error.message });
+    }
     }
 
 
