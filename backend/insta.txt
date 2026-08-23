@@ -1,0 +1,63 @@
+==> authentication 
+    ==> login
+    ==> register (user data save krna / token user ko dena )
+    ==> logout 
+
+==> posts
+    ==> create
+    ==> can see the feed
+    ==> like and save posts
+
+==>users
+    ==>followerss
+    ==>following
+
+
+    user = {
+        username : string 
+        email :string unique
+        password :string
+        bio : string
+        profile_pic : string
+    }
+
+
+
+    // imagekit is used as cloud storage 
+
+    // how to check for both is both exist using single command not create seperate req for 2 
+
+    const isuseralreadyexists = await user.findOne({
+        $or:[{email},{username}]
+    })
+
+    /controllers introduced 
+    //bcryptjs is introduced for hashing 
+
+
+    post --- {
+        caption: string 
+        img_url: string
+        user : user_id
+        created at: date- time
+    }
+
+
+    // multer is a package used for reading the data encomming from form-data
+
+    img is send in form - data 
+    upload.single("file") //filename should be file while sending response from postman 
+
+    {
+    "username":"saksham123456",
+    "email":"saksham@gmail.com",
+    "password":"123456",
+    "bio": "hello everyone my name is saksham"
+}
+    
+
+    // js main agar hume 2 object id compare krwanui h toh usse direct compare krana galat hoga usse humme ek method k throough krwana padhta hai 
+    we use user.tostring 
+
+    edge collection 
+    indexing in mongodb 

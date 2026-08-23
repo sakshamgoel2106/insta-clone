@@ -1,0 +1,84 @@
+================================================================================
+INSTACLONE - DETAILED REQUEST/RESPONSE ARCHITECTURE & FUNCTIONALITY
+================================================================================
+
+This document explains exactly how data flows from the moment a user interacts 
+with the UI on the frontend, down to the database in the backend, and back up.
+
+--------------------------------------------------------------------------------
+1. THE GENERAL FLOW
+--------------------------------------------------------------------------------
+Frontend UI (React Component) 
+  --> Frontend Service (Axios API File) 
+      --> HTTP Request 
+          --> Backend Route 
+              --> Backend Controller 
+                  --> Backend Model (Database) 
+                  <-- Response Data
+              <-- JSON Response
+      <-- Axios Promise Resolves
+<-- React Component Updates UI
+
+--------------------------------------------------------------------------------
+2. AUTHENTICATION FUNCTIONALITY (Login/Register/Logout/GetMe)
+--------------------------------------------------------------------------------
+- UI Trigger: User submits form in `frontend/src/features/auth/pages/Login.jsx` or `Register.jsx`.
+- Frontend API: `frontend/src/features/auth/services/auth.api.js` sends an Axios POST request to `/api/auth/login` or `/api/auth/register`.
+- Backend Route: `backend/src/routes/auth.routes.js` receives the request.
+- Backend Controller: `backend/src/controllers/auth.controller.js`. 
+  - Validates credentials.
+  - Queries `backend/src/models/user.model.js`.
+  - Generates a JWT token and sets it in an HTTP-only cookie.
+  - Returns a JSON response with the user data.
+
+--------------------------------------------------------------------------------
+3. POSTS FUNCTIONALITY (Upload, Feed, Like, Delete)
+--------------------------------------------------------------------------------
+- UI Trigger: User uploads a photo from `Profile.jsx` or views the feed in `Feed.jsx`.
+- Frontend API: `frontend/src/features/post/services/post.api.js` handles `api.post("/")` or `api.get("/")`.
+- Backend Route: `backend/src/routes/post.routes.js`.
+  - Uses `upload.single("file")` middleware (Multer + ImageKit) to process the image upload.
+- Backend Controller: `backend/src/controllers/post.controller.js`.
+  - Creates a new document in `backend/src/models/post.model.js`.
+  - Links the post to the authenticated user's ID.
+  - Returns the newly created post URL and data.
+
+--------------------------------------------------------------------------------
+4. REELS FUNCTIONALITY (Upload, View Scroller)
+--------------------------------------------------------------------------------
+- UI Trigger: User views the Reels page (`Reels.jsx`) or uploads a video.
+- Frontend API: `post.api.js` (using `reelApi` instance) calls `/api/reel`.
+- Backend Route: `backend/src/routes/reel.routes.js`.
+- Backend Controller: `backend/src/controllers/reel.controller.js`.
+  - Retrieves videos from `backend/src/models/reel.model.js`.
+  - Populates the creator's username and profile picture so the frontend can display them in the scroller.
+
+--------------------------------------------------------------------------------
+5. FOLLOW / UNFOLLOW FUNCTIONALITY
+--------------------------------------------------------------------------------
+- UI Trigger: User clicks "Follow" button in `Profile.jsx` or `Search.jsx`.
+- Frontend API: `auth.api.js` -> `toggleFollow(userId)`.
+- Backend Route: `backend/src/routes/follow.routes.js`.
+- Backend Controller: `backend/src/controllers/follow.controller.js`.
+  - Finds the target user in `user.model.js`.
+  - Adds/removes the current user's ID from the target user's `followers` array.
+  - Adds/removes the target user's ID from the current user's `following` array.
+
+--------------------------------------------------------------------------------
+6. COMMENTS FUNCTIONALITY
+--------------------------------------------------------------------------------
+- UI Trigger: User types a comment and presses send in `SinglePost.jsx` or `Reels.jsx`.
+- Frontend API: `post.api.js` calls `/api/post/comment/:postId`.
+- Backend Route: `backend/src/routes/comment.routes.js`.
+- Backend Controller: `backend/src/controllers/comment.controller.js`.
+  - Creates a document in `backend/src/models/comment.model.js`.
+  - Pushes the comment ID into the parent Post or Reel's `comments` array.
+
+--------------------------------------------------------------------------------
+7. SAVED POSTS FUNCTIONALITY
+--------------------------------------------------------------------------------
+- UI Trigger: User clicks the bookmark icon on a post.
+- Frontend API: `post.api.js` -> `savePost(postId)`.
+- Backend Route: `backend/src/routes/save.routes.js`.
+- Backend Controller: `backend/src/controllers/save.controller.js`.
+  - Updates the `savedPosts` array inside `backend/src/models/user.model.js`.

@@ -1,0 +1,174 @@
+/* Auth page — Instagram style */
+
+.auth-page {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    padding: 1rem;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Instagram wordmark */
+.auth-logo {
+    font-size: 2.4rem;
+    font-weight: 700;
+    font-family: 'Dancing Script', 'Brush Script MT', cursive;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+/* The white box */
+.auth-box {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    padding: 2.5rem 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.auth-tagline {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #8e8e8e;
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+
+.auth-input-group {
+    position: relative;
+    width: 100%;
+}
+
+.auth-input-group input {
+    width: 100%;
+    background: #fafafa;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    padding: 0.7rem 1rem 0.7rem 2.8rem;
+    font-size: 0.875rem;
+    color: #262626;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: 'Inter', sans-serif;
+
+    &::placeholder {
+        color: #aaa;
+    }
+
+    &:focus {
+        border-color: #a8a8a8;
+        background: #fff;
+    }
+}
+
+.auth-input-icon {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8e8e8e;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: 0.25rem;
+    letter-spacing: 0.3px;
+
+    &:hover {
+        opacity: 0.9;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.5rem 0;
+
+    &::before, &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #dbdbdb;
+    }
+
+    span {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #8e8e8e;
+        letter-spacing: 1px;
+    }
+}
+
+/* Link box below */
+.auth-link-box {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    padding: 1.25rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #262626;
+
+    a, .auth-link {
+        color: #0095f6;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        background: none;
+        border: none;
+        font-size: 0.875rem;
+        padding: 0;
+        margin-left: 0.25rem;
+    }
+}
+
+.auth-error {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 5px;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    color: #856404;
+    text-align: center;
+}

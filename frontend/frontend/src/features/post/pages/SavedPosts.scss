@@ -1,0 +1,142 @@
+/* Saved Posts Page */
+
+.saved-page {
+    max-width: 935px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 6rem;
+}
+
+.saved-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.feed-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #333;
+    border-top-color: #bc1888;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.saved-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.saved-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.saved-count {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Empty state */
+.saved-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 2rem;
+
+    .saved-empty-icon {
+        font-size: 3.5rem;
+        opacity: 0.4;
+        margin-bottom: 0.5rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    p {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+}
+
+/* 3-column grid */
+.saved-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+}
+
+.saved-grid-item {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--bg-card);
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    &:hover img { transform: scale(1.05); }
+    &:hover .saved-grid-overlay { opacity: 1; }
+}
+
+.saved-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0.6rem;
+    opacity: 0;
+    transition: opacity 0.25s;
+    gap: 0.3rem;
+}
+
+.saved-overlay-user {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.saved-overlay-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid rgba(255,255,255,0.6);
+}
+
+.saved-overlay-caption {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .saved-grid { grid-template-columns: repeat(3, 1fr); gap: 2px; }
+}

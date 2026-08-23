@@ -1,0 +1,13 @@
+router - dom  is used to show different ui on different api 
+/register == register form 
+/login == login form
+
+frontend architecture is based on the 4 layer model 
+
+features folder == alag alag features k liye folder 
+pages and styles and components are the part of the ui layer 
+then the services is the part of the api layer 
+then
+the state layer is the auth.context.js
+
+hook layer under the hook folder 
