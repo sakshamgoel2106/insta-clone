@@ -16,6 +16,10 @@ app.use(cors({
     credentials: true
 }));
 
+app.get("/", (req, res) => {
+    res.status(200).json({ status: "ok", message: "InstaClone API is running" });
+});
+
 app.use("/api/auth", router);
 app.use("/api/post", Postrouter);
 app.use("/api/user", Userrouter);
