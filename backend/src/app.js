@@ -20,6 +20,10 @@ app.get("/", (req, res) => {
     res.status(200).json({ status: "ok", message: "InstaClone API is running" });
 });
 
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 app.use("/api/auth", router);
 app.use("/api/post", Postrouter);
 app.use("/api/user", Userrouter);
